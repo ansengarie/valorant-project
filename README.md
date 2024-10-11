@@ -3,8 +3,7 @@
 
 
 ### link deployment:
-
-https://valorant-project-e9wdwz6lq-ansengaries-projects.vercel.app/
+https://valorant-project-ten.vercel.app/
 
 ### API:
 https://valorant-api.com/
