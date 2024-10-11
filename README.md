@@ -1,4 +1,13 @@
 # valorant-project
+![image](https://github.com/user-attachments/assets/a219749d-bfcc-49a0-bc28-8f2c4ded4eb9)
+
+
+### link deployment:
+
+https://valorant-project-e9wdwz6lq-ansengaries-projects.vercel.app/
+
+### API:
+https://valorant-api.com/
 
 ## Project setup
 ```
