@@ -5,70 +5,86 @@
                 class="w-12 h-12 border-t-4 border-white border-solid rounded-full loader animate-spin"
             ></div>
         </div>
+
         <div v-else>
+            <!-- Wrapper Utama dengan Flex -->
             <div
-                class="relative flex items-center bg-gradient-to-r from-[#0B0F12] to-[#1B252D] h-screen w-full overflow-hidden"
+                class="flex flex-col md:flex-row-reverse items-center bg-gradient-to-r from-[#0B0F12] to-[#1B252D] min-h-screen p-5 md:p-20"
             >
+                <!-- Gambar Agent -->
+                <div class="flex justify-center w-full md:w-1/2">
+                    <img
+                        :src="character?.fullPortraitV2"
+                        alt="Character Image"
+                        class="w-full max-w-[300px] md:max-w-none md:h-[80vh] object-contain"
+                    />
+                </div>
+
+                <!-- Detail Agent -->
                 <div
-                    class="absolute inset-0 flex items-center h-full p-20 left-20"
+                    class="w-full mt-10 space-y-8 text-center text-white md:w-1/2 md:text-left md:mt-0"
                 >
-                    <div class="space-y-10 text-white text-start">
-                        <p class="text-6xl font-black">
+                    <div class="mb-10">
+                        <h1
+                            class="mb-2 text-2xl font-black uppercase md:mb-4 md:text-6xl"
+                        >
                             {{ character?.displayName }}
-                        </p>
-                        <p class="w-[50%]">
+                        </h1>
+                        <p class="text-sm md:text-base">
                             {{ character?.description }}
                         </p>
-                        <div
-                            class="grid p-4 justify-items-center gap-y-2 w-fit aspect-square outline outline-offset-4 bg-[#21354a] outline-red-500"
+                    </div>
+
+                    <!-- Role Agent -->
+                    <div
+                        class="flex flex-col mt-10 p-4 justify-center items-center gap-y-2 w-fit bg-[#21354a] outline outline-offset-4 outline-red-500 justify-self-center md:justify-self-start"
+                    >
+                        <img
+                            :src="character?.role?.displayIcon"
+                            alt="Role"
+                            class="w-6 h-6 md:h-12 md:w-12"
+                            style="
+                                filter: invert(50%) sepia(100%) saturate(10000%);
+                            "
+                        />
+                        <p>ROLE</p>
+                        <p class="text-red-500 uppercase">
+                            {{ character?.role?.displayName }}
+                        </p>
+                    </div>
+
+                    <!-- Ability Section -->
+                    <div>
+                        <p
+                            class="mt-10 text-2xl font-black uppercase md:text-5xl"
                         >
-                            <img
-                                :src="character?.role?.displayIcon"
-                                alt="Role"
-                                class="w-12 h-12 filter"
-                                style="
-                                    filter: invert(50%) sepia(100%)
-                                        saturate(10000%);
-                                "
-                            />
-                            <p>ROLE</p>
-                            <p class="text-red-500 uppercase">
-                                {{ character?.role?.displayName }}
-                            </p>
-                        </div>
-                        <div class="w-[50%]">
-                            <h1 class="mb-4 text-5xl font-black">ABILITIES</h1>
-                            <div class="grid grid-cols-4 justify-items-stretch">
-                                <div
-                                    v-for="(
-                                        ability, index
-                                    ) in character?.abilities.slice(0, 4)"
-                                    :key="index"
-                                >
-                                    <div
-                                        class="flex flex-col items-center justify-center w-fit"
-                                    >
-                                        <img
-                                            :src="ability.displayIcon"
-                                            alt=""
-                                            class="w-12 h-12 mb-2"
-                                        />
-                                        <p>
-                                            {{ ability.displayName }}
-                                        </p>
-                                    </div>
-                                </div>
+                            abbilities
+                        </p>
+                        <div
+                            class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-4 md:justify-items-start justify-items-center"
+                        >
+                            <div
+                                v-for="(
+                                    ability, index
+                                ) in character?.abilities.slice(0, 4)"
+                                :key="index"
+                                class="flex flex-col items-center mt-2"
+                            >
+                                <img
+                                    :src="ability.displayIcon"
+                                    alt="Ability Icon"
+                                    class="w-8 h-8 md:w-12 md:h-12"
+                                />
+                                <p class="text-white">
+                                    {{ ability.displayName }}
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <img
-                    :src="character?.fullPortraitV2"
-                    alt="Character Image"
-                    class="absolute top-0 right-0 object-cover h-full"
-                />
             </div>
         </div>
+
         <p v-if="error">{{ error }}</p>
     </div>
 </template>
@@ -80,16 +96,16 @@ import { onMounted } from "vue";
 
 export default {
     setup() {
-        const route = useRoute(); // Mendapatkan ID dari URL
+        const route = useRoute();
         console.log(route.params.id);
         const { character, loading, error, loadCharacter } =
             useFetchCharacterDetail(route.params.id);
 
-        onMounted(() => {
-            loadCharacter(); // Panggil fungsi loadCharacter ketika komponen di-mount
+        onMounted(async () => {
+            await loadCharacter();
         });
 
-        return { character, loading, error };
+        return { character, loading, error, loadCharacter };
     },
 };
 </script>

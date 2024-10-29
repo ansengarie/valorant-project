@@ -18,7 +18,9 @@
                     alt="Valorant"
                 />
             </div>
-            <div class="flex flex-row space-x-20 font-black">
+            <div
+                class="flex flex-col space-x-0 space-y-20 font-black md:space-x-20 md:flex-row md:space-y-0"
+            >
                 <router-link to="/characters">
                     <button
                         class="px-12 py-5 text-white bg-red-500 outline-offset-4 outline hover:bg-white hover:text-red-500"
